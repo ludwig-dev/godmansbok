@@ -63,4 +63,16 @@ public class TransactionController {
         Long godmanId = Long.parseLong(userDetails.getUsername());
         return TransactionDTO.toDto(transactionService.updateTransaction(godmanId, clientId, accountId, transactionId, dto));
     }
+
+    @DeleteMapping("/{transactionId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTransaction(
+            @PathVariable Long clientId,
+            @PathVariable Long accountId,
+            @PathVariable Long transactionId,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        Long godmanId = Long.parseLong(userDetails.getUsername());
+        transactionService.deleteTransaction(godmanId, clientId, accountId, transactionId);
+    }
 }
