@@ -37,4 +37,12 @@ public class ClientController {
         Long godmanId = Long.parseLong(userDetails.getUsername());
         return ClientDTO.toDto(clientService.getClientById(godmanId, clientId));
     }
+
+    @DeleteMapping("/{clientId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteClientById(@PathVariable Long clientId,
+                                 @AuthenticationPrincipal UserDetails userDetails) {
+        Long godmanId = Long.parseLong(userDetails.getUsername());
+        clientService.deleteClientById(godmanId, clientId);
+    }
 }
