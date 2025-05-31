@@ -139,4 +139,29 @@ public class TransactionService {
         return transactionRepository.save(tx);
     }
 
+    public void deleteTransaction(Long godmanId,
+                                  Long clientId,
+                                  Long accountId,
+                                  Long transactionId) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+        if (!client.getGodman().getId().equals(godmanId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
+        if (!account.getClient().getId().equals(clientId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        Transaction tx = transactionRepository.findById(transactionId)
+                .orElseThrow(() -> new ResourceNotFoundException("Transaction not found"));
+        if (!tx.getAccount().getId().equals(accountId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        transactionRepository.delete(tx);
+    }
+
 }
