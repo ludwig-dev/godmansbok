@@ -1,4 +1,4 @@
-package org.ludwig.godmansbok.clients;
+package org.ludwig.godmansbok.domain.clients;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

@@ -3,7 +3,7 @@ package org.ludwig.godmansbok.domain.godman;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.ludwig.godmansbok.clients.Client;
+import org.ludwig.godmansbok.domain.clients.Client;
 
 import java.util.List;
 

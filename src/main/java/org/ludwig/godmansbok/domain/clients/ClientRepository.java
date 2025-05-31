@@ -1,4 +1,4 @@
-package org.ludwig.godmansbok.clients;
+package org.ludwig.godmansbok.domain.clients;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
