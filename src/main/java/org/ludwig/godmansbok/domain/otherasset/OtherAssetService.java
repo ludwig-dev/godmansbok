@@ -7,6 +7,8 @@ import org.ludwig.godmansbok.exceptions.NotAuthorizedException;
 import org.ludwig.godmansbok.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OtherAssetService {
 
@@ -37,5 +39,16 @@ public class OtherAssetService {
         asset.setAttachmentNumber(dto.attachmentNumber());
         asset.setClient(client);
         return otherAssetRepository.save(asset);
+    }
+
+    public List<OtherAsset> getAllOtherAssets(Long godmanId,
+                                              Long clientId) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+        if (!client.getGodman().getId().equals(godmanId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        return otherAssetRepository.findAllByClientId(clientId);
     }
 }
