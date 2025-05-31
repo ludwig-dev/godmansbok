@@ -45,4 +45,16 @@ public class ClientService {
         }
         return client;
     }
+
+    public void deleteClientById(Long godmanId, Long clientId) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+
+        // Kontrollera att klienten faktiskt tillhör godmanId
+        if (!client.getGodman().getId().equals(godmanId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        clientRepository.delete(client);
+    }
 }
