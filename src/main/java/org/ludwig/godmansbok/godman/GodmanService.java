@@ -23,4 +23,12 @@ public class GodmanService {
     public Optional<Godman> findByEmail(String email) {
         return godmanRepository.findByEmailIgnoreCase(email);
     }
+
+    public void registerNewUser(Godman godman) {
+        godman.setRole("USER");
+        godman.setEmail(godman.getEmail().toLowerCase());
+        godman.setUsername(godman.getUsername().toLowerCase());
+        godman.setPassword(passwordEncoder.encode(godman.getPassword()));
+        godmanRepository.save(godman);
+    }
 }
