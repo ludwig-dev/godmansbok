@@ -1,6 +1,7 @@
 package org.ludwig.godmansbok.domain.account;
 
 import org.ludwig.godmansbok.domain.account.dto.AccountDTO;
+import org.ludwig.godmansbok.domain.account.dto.AccountUpdateDTO;
 import org.ludwig.godmansbok.domain.clients.Client;
 import org.ludwig.godmansbok.domain.clients.ClientRepository;
 import org.ludwig.godmansbok.exceptions.NotAuthorizedException;
@@ -63,5 +64,33 @@ public class AccountService {
         }
 
         return account;
+    }
+
+    public Account updateAccount(Long godmanId,
+                                 Long clientId,
+                                 Long accountId,
+                                 AccountUpdateDTO dto) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+
+        if (!client.getGodman().getId().equals(godmanId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
+
+        if (!account.getClient().getId().equals(clientId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        if (dto.getAccountName() != null) {
+            account.setAccountName(dto.getAccountName());
+        }
+        if (dto.getAccountNumber() != null) {
+            account.setAccountNumber(dto.getAccountNumber());
+        }
+
+        return accountRepository.save(account);
     }
 }
