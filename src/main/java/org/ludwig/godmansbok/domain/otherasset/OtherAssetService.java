@@ -51,4 +51,22 @@ public class OtherAssetService {
 
         return otherAssetRepository.findAllByClientId(clientId);
     }
+
+    public OtherAsset getOtherAssetById(Long godmanId,
+                                        Long clientId,
+                                        Long otherAssetId) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+        if (!client.getGodman().getId().equals(godmanId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        OtherAsset asset = otherAssetRepository.findById(otherAssetId)
+                .orElseThrow(() -> new ResourceNotFoundException("OtherAsset not found"));
+
+        if (!asset.getClient().getId().equals(clientId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+        return asset;
+    }
 }
