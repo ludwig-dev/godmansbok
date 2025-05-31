@@ -35,9 +35,4 @@ public class Transaction {
     // Bilagereferens (fritt fält)
     @Column(nullable = true, length = 50)
     private String attachmentNumber;
-
-    // ÖF-notering (fritt fält för granskning)
-    @Column(nullable = true, length = 200)
-    private String ofNotation;
-
 }
