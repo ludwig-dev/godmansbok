@@ -6,6 +6,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/clients")
 public class ClientController {
@@ -21,5 +23,11 @@ public class ClientController {
                                   @AuthenticationPrincipal UserDetails userDetails) {
         Long godmanId = Long.parseLong(userDetails.getUsername());
         return ClientDTO.toDto(clientService.createClient(godmanId, dto));
+    }
+
+    @GetMapping
+    public List<ClientDTO> getAllClients(@AuthenticationPrincipal UserDetails userDetails) {
+        Long godmanId = Long.parseLong(userDetails.getUsername());
+        return ClientDTO.toDtos(clientService.getAllClientsByGodman(godmanId));
     }
 }
