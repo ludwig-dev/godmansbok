@@ -32,12 +32,18 @@ public class AuthController {
                 .body("Godman registered successfully");
     }
 
-
     @PostMapping("/login")
     public ResponseEntity<Void> login(@Valid @RequestBody LoginRequest req,
                                       HttpServletResponse resp) {
         ResponseCookie cookie = authService.login(req);
         resp.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpServletResponse response) {
+        ResponseCookie cookie = authService.createLogoutCookie();
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         return ResponseEntity.ok().build();
     }
 }
