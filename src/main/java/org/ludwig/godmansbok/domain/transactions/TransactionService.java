@@ -5,6 +5,7 @@ import org.ludwig.godmansbok.domain.account.AccountRepository;
 import org.ludwig.godmansbok.domain.clients.Client;
 import org.ludwig.godmansbok.domain.clients.ClientRepository;
 import org.ludwig.godmansbok.domain.transactions.dto.TransactionDTO;
+import org.ludwig.godmansbok.domain.transactions.dto.TransactionUpdateDTO;
 import org.ludwig.godmansbok.exceptions.NotAuthorizedException;
 import org.ludwig.godmansbok.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -94,6 +95,48 @@ public class TransactionService {
         }
 
         return tx;
+    }
+
+    public Transaction updateTransaction(Long godmanId,
+                                         Long clientId,
+                                         Long accountId,
+                                         Long transactionId,
+                                         TransactionUpdateDTO dto) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+        if (!client.getGodman().getId().equals(godmanId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
+        if (!account.getClient().getId().equals(clientId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        Transaction tx = transactionRepository.findById(transactionId)
+                .orElseThrow(() -> new ResourceNotFoundException("Transaction not found"));
+        if (!tx.getAccount().getId().equals(accountId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        if (dto.getDate() != null) {
+            tx.setDate(dto.getDate());
+        }
+        if (dto.getAmount() != null) {
+            tx.setAmount(dto.getAmount());
+        }
+        if (dto.getType() != null) {
+            tx.setType(dto.getType());
+        }
+        if (dto.getDescription() != null) {
+            tx.setDescription(dto.getDescription());
+        }
+        if (dto.getAttachmentNumber() != null) {
+            tx.setAttachmentNumber(dto.getAttachmentNumber());
+        }
+
+        return transactionRepository.save(tx);
     }
 
 }
