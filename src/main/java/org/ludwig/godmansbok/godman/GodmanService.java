@@ -25,7 +25,7 @@ public class GodmanService {
     }
 
     public void registerNewUser(Godman godman) {
-        godman.setRole("USER");
+        godman.setRole("GODMAN");
         godman.setEmail(godman.getEmail().toLowerCase());
         godman.setUsername(godman.getUsername().toLowerCase());
         godman.setPassword(passwordEncoder.encode(godman.getPassword()));
