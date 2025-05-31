@@ -60,4 +60,15 @@ public class OtherAssetController {
         Long godmanId = Long.parseLong(userDetails.getUsername());
         return OtherAssetDTO.toDto(otherAssetService.updateOtherAsset(godmanId, clientId, otherAssetId, dto));
     }
+
+    @DeleteMapping("/{otherAssetId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOtherAsset(
+            @PathVariable Long clientId,
+            @PathVariable Long otherAssetId,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        Long godmanId = Long.parseLong(userDetails.getUsername());
+        otherAssetService.deleteOtherAsset(godmanId, clientId, otherAssetId);
+    }
 }
