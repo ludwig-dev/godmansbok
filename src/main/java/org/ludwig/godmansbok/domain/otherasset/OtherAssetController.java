@@ -38,4 +38,14 @@ public class OtherAssetController {
         Long godmanId = Long.parseLong(userDetails.getUsername());
         return OtherAssetDTO.toDtos(otherAssetService.getAllOtherAssets(godmanId, clientId));
     }
+
+    @GetMapping("/{otherAssetId}")
+    public OtherAssetDTO getOtherAssetById(
+            @PathVariable Long clientId,
+            @PathVariable Long otherAssetId,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        Long godmanId = Long.parseLong(userDetails.getUsername());
+        return OtherAssetDTO.toDto(otherAssetService.getOtherAssetById(godmanId, clientId, otherAssetId));
+    }
 }
