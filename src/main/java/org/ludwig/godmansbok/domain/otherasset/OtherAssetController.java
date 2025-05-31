@@ -2,6 +2,7 @@ package org.ludwig.godmansbok.domain.otherasset;
 
 import jakarta.validation.Valid;
 import org.ludwig.godmansbok.domain.otherasset.dto.OtherAssetDTO;
+import org.ludwig.godmansbok.domain.otherasset.dto.OtherAssetUpdateDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -47,5 +48,16 @@ public class OtherAssetController {
 
         Long godmanId = Long.parseLong(userDetails.getUsername());
         return OtherAssetDTO.toDto(otherAssetService.getOtherAssetById(godmanId, clientId, otherAssetId));
+    }
+
+    @PatchMapping("/{otherAssetId}")
+    public OtherAssetDTO updateOtherAsset(
+            @PathVariable Long clientId,
+            @PathVariable Long otherAssetId,
+            @Valid @RequestBody OtherAssetUpdateDTO dto,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        Long godmanId = Long.parseLong(userDetails.getUsername());
+        return OtherAssetDTO.toDto(otherAssetService.updateOtherAsset(godmanId, clientId, otherAssetId, dto));
     }
 }
