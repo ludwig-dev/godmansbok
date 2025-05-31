@@ -1,6 +1,7 @@
 package org.ludwig.godmansbok.domain.clients;
 
 import org.ludwig.godmansbok.domain.clients.dto.ClientDTO;
+import org.ludwig.godmansbok.domain.clients.dto.ClientUpdateDTO;
 import org.ludwig.godmansbok.domain.godman.Godman;
 import org.ludwig.godmansbok.domain.godman.GodmanRepository;
 import org.ludwig.godmansbok.exceptions.NotAuthorizedException;
@@ -47,6 +48,19 @@ public class ClientService {
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found"));
         checkClientBelongsToGodman(client, godmanId);
         clientRepository.delete(client);
+    }
+
+    public Client updateClientById(Long godmanId, Long clientId, ClientUpdateDTO dto) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+        checkClientBelongsToGodman(client, godmanId);
+        if (dto.getName() != null) {
+            client.setName(dto.getName());
+        }
+        if (dto.getPersonalNumber() != null) {
+            client.setPersonalNumber(dto.getPersonalNumber());
+        }
+        return clientRepository.save(client);
     }
 
     // Kontrollera att klienten faktiskt tillhör godmanId
