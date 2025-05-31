@@ -6,6 +6,8 @@ import org.ludwig.godmansbok.domain.godman.GodmanRepository;
 import org.ludwig.godmansbok.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClientService {
     private final ClientRepository clientRepository;
@@ -27,5 +29,9 @@ public class ClientService {
         c.setGodman(godman);
 
         return clientRepository.save(c);
+    }
+
+    public List<Client> getAllClientsByGodman(Long godmanId) {
+        return clientRepository.findAllByGodmanId(godmanId);
     }
 }
