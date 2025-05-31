@@ -46,4 +46,22 @@ public class AccountService {
 
         return accountRepository.findAllByClientId(clientId);
     }
+
+    public Account getAccountById(Long godmanId, Long clientId, Long accountId) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+
+        if (!client.getGodman().getId().equals(godmanId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
+
+        if (!client.getGodman().getId().equals(godmanId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        return account;
+    }
 }
