@@ -109,4 +109,26 @@ public class OtherAssetService {
 
         return otherAssetRepository.save(asset);
     }
+
+    public void deleteOtherAsset(Long godmanId,
+                                 Long clientId,
+                                 Long otherAssetId) {
+        // Kontrollera klient
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+        if (!client.getGodman().getId().equals(godmanId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        // Hämta OtherAsset
+        OtherAsset asset = otherAssetRepository.findById(otherAssetId)
+                .orElseThrow(() -> new ResourceNotFoundException("OtherAsset not found"));
+
+        // Kontrollera att asset hör till klient
+        if (!asset.getClient().getId().equals(clientId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        otherAssetRepository.delete(asset);
+    }
 }
