@@ -39,4 +39,15 @@ public class TransactionController {
         Long godmanId = Long.parseLong(userDetails.getUsername());
         return TransactionDTO.toDtos(transactionService.getAllTransactions(godmanId, clientId, accountId));
     }
+
+    @GetMapping("/{transactionId}")
+    public TransactionDTO getTransactionById(
+            @PathVariable Long clientId,
+            @PathVariable Long accountId,
+            @PathVariable Long transactionId,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        Long godmanId = Long.parseLong(userDetails.getUsername());
+        return TransactionDTO.toDto(transactionService.getTransactionById(godmanId, clientId, accountId, transactionId));
+    }
 }
