@@ -1,6 +1,7 @@
 package org.ludwig.godmansbok.auth;
 
 import org.ludwig.godmansbok.auth.dto.LoginRequest;
+import org.ludwig.godmansbok.auth.dto.RegisterRequest;
 import org.ludwig.godmansbok.godman.Godman;
 import org.ludwig.godmansbok.godman.GodmanService;
 import org.springframework.http.ResponseCookie;
@@ -46,5 +47,16 @@ public class AuthService {
                 .path("/")
                 .maxAge(0)
                 .build();
+    }
+
+    public void register(RegisterRequest req) {
+        if (godmanService.findByUsername(req.getUsername()).isPresent()) {
+            throw new IllegalArgumentException("Username already exists");
+        }
+        if (godmanService.findByEmail(req.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Email already exists");
+        }
+        Godman u = req.toGodman();
+        godmanService.registerNewUser(u);
     }
 }
