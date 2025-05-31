@@ -3,7 +3,7 @@ package org.ludwig.godmansbok.auth;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.ludwig.godmansbok.godman.Godman;
+import org.ludwig.godmansbok.domain.godman.Godman;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

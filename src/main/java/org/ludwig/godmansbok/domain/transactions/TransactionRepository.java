@@ -1,6 +1,5 @@
-package org.ludwig.godmansbok.accounts.repositories;
+package org.ludwig.godmansbok.domain.transactions;
 
-import org.ludwig.godmansbok.accounts.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 }

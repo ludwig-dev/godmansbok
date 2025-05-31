@@ -1,6 +1,5 @@
-package org.ludwig.godmansbok.godman;
+package org.ludwig.godmansbok.domain.godman;
 
-import org.ludwig.godmansbok.godman.dto.GodmanDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

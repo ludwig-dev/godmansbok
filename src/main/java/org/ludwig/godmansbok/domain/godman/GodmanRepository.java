@@ -1,4 +1,4 @@
-package org.ludwig.godmansbok.godman;
+package org.ludwig.godmansbok.domain.godman;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

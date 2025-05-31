@@ -2,10 +2,10 @@ package org.ludwig.godmansbok.clients;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.ludwig.godmansbok.accounts.Account;
-import org.ludwig.godmansbok.accounts.Liability;
-import org.ludwig.godmansbok.accounts.OtherAsset;
-import org.ludwig.godmansbok.godman.Godman;
+import org.ludwig.godmansbok.domain.account.Account;
+import org.ludwig.godmansbok.domain.liability.Liability;
+import org.ludwig.godmansbok.domain.otherasset.OtherAsset;
+import org.ludwig.godmansbok.domain.godman.Godman;
 
 import java.util.List;
 

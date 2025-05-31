@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.ludwig.godmansbok.godman.Godman;
+import org.ludwig.godmansbok.domain.godman.Godman;
 
 @Data
 @NoArgsConstructor

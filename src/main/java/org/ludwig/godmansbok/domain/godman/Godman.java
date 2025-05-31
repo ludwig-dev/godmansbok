@@ -1,4 +1,4 @@
-package org.ludwig.godmansbok.godman;
+package org.ludwig.godmansbok.domain.godman;
 
 import jakarta.persistence.*;
 import lombok.Getter;

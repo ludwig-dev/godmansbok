@@ -1,7 +1,8 @@
-package org.ludwig.godmansbok.accounts;
+package org.ludwig.godmansbok.domain.transactions;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.ludwig.godmansbok.domain.account.Account;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

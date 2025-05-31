@@ -2,8 +2,8 @@ package org.ludwig.godmansbok.auth;
 
 import org.ludwig.godmansbok.auth.dto.LoginRequest;
 import org.ludwig.godmansbok.auth.dto.RegisterRequest;
-import org.ludwig.godmansbok.godman.Godman;
-import org.ludwig.godmansbok.godman.GodmanService;
+import org.ludwig.godmansbok.domain.godman.Godman;
+import org.ludwig.godmansbok.domain.godman.GodmanService;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;

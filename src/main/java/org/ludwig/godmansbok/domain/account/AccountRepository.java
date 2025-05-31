@@ -1,6 +1,5 @@
-package org.ludwig.godmansbok.accounts.repositories;
+package org.ludwig.godmansbok.domain.account;
 
-import org.ludwig.godmansbok.accounts.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 public interface AccountRepository extends JpaRepository<Account, Long>{
 }

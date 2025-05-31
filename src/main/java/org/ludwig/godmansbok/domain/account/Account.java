@@ -1,7 +1,8 @@
-package org.ludwig.godmansbok.accounts;
+package org.ludwig.godmansbok.domain.account;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.ludwig.godmansbok.domain.transactions.Transaction;
 import org.ludwig.godmansbok.clients.Client;
 
 import java.util.List;

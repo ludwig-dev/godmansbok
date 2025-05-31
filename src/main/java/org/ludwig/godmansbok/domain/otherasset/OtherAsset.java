@@ -1,4 +1,4 @@
-package org.ludwig.godmansbok.accounts;
+package org.ludwig.godmansbok.domain.otherasset;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
