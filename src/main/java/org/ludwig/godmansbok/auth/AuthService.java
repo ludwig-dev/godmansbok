@@ -37,4 +37,14 @@ public class AuthService {
                 .maxAge(Duration.ofDays(7))
                 .build();
     }
+
+    public ResponseCookie createLogoutCookie() {
+        return ResponseCookie.from("token", "")
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("Strict")
+                .path("/")
+                .maxAge(0)
+                .build();
+    }
 }
