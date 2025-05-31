@@ -2,6 +2,7 @@ package org.ludwig.godmansbok.accounts;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.ludwig.godmansbok.clients.Client;
 
 import java.math.BigDecimal;
 
@@ -34,4 +35,9 @@ public class Liability {
     // Bilaga nr (fritt fält)
     @Column(nullable = true, length = 50)
     private String attachmentNumber;
+
+    // Relation: Varje skuld tillhör en specifik klient
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
 }

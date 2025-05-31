@@ -3,6 +3,9 @@ package org.ludwig.godmansbok.godman;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.ludwig.godmansbok.clients.Client;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,4 +27,13 @@ public class Godman {
 
     @Column(nullable = false)
     private String role;       // Ex. "ROLE_USER" eller "ROLE_ADMIN"
+
+    // Relation: En godman kan ha flera klienter (huvudmän)
+    @OneToMany(
+            mappedBy = "godman",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private List<Client> clients;
 }

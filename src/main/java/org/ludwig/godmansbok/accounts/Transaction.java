@@ -20,7 +20,7 @@ public class Transaction {
     @Column(nullable = false)
     private LocalDate date;
 
-    // Belopp i kronor (ex. 1000.00)
+    // Belopp i kronor
     @Column(nullable = false, precision = 14, scale = 2)
     private BigDecimal amount;
 
@@ -32,7 +32,12 @@ public class Transaction {
     @Column(nullable = true)
     private String description;
 
-    // Bilagereferens (fritt fält)
+    // Bilagereferens
     @Column(nullable = true, length = 50)
     private String attachmentNumber;
+
+    // Relation: Varje transaktion tillhör exakt ett konto
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
 }
