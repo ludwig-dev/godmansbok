@@ -2,6 +2,7 @@ package org.ludwig.godmansbok.domain.transactions;
 
 import jakarta.validation.Valid;
 import org.ludwig.godmansbok.domain.transactions.dto.TransactionDTO;
+import org.ludwig.godmansbok.domain.transactions.dto.TransactionUpdateDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -49,5 +50,17 @@ public class TransactionController {
 
         Long godmanId = Long.parseLong(userDetails.getUsername());
         return TransactionDTO.toDto(transactionService.getTransactionById(godmanId, clientId, accountId, transactionId));
+    }
+
+    @PatchMapping("/{transactionId}")
+    public TransactionDTO updateTransaction(
+            @PathVariable Long clientId,
+            @PathVariable Long accountId,
+            @PathVariable Long transactionId,
+            @Valid @RequestBody TransactionUpdateDTO dto,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        Long godmanId = Long.parseLong(userDetails.getUsername());
+        return TransactionDTO.toDto(transactionService.updateTransaction(godmanId, clientId, accountId, transactionId, dto));
     }
 }
