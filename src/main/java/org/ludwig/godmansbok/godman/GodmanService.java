@@ -1,7 +1,10 @@
 package org.ludwig.godmansbok.godman;
 
+import org.ludwig.godmansbok.godman.dto.GodmanDTO;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -30,5 +33,11 @@ public class GodmanService {
         godman.setUsername(godman.getUsername().toLowerCase());
         godman.setPassword(passwordEncoder.encode(godman.getPassword()));
         godmanRepository.save(godman);
+    }
+
+    public Godman getGodman(Long godmanId) {
+        return godmanRepository.findById(godmanId)
+                .orElseThrow(() ->
+                        new ResponseStatusException(HttpStatus.NOT_FOUND, "Godman not found"));
     }
 }
