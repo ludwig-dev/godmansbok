@@ -7,13 +7,3 @@ public record GodmanDTO(Long id, String username, String email, String role) {
         return new GodmanDTO(godman.getId(), godman.getUsername(), godman.getEmail(), godman.getRole());
     }
 }
-
-//@Data
-//@NoArgsConstructor
-//@AllArgsConstructor
-//public class GodmanDTO {
-//    private Long id;
-//    private String username;
-//    private String email;
-//    private String role;
-//}
