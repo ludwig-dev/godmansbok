@@ -34,7 +34,16 @@ public class AccountController {
             @AuthenticationPrincipal UserDetails userDetails) {
 
         Long godmanId = Long.parseLong(userDetails.getUsername());
-        List<Account> accounts = accountService.getAllAccounts(godmanId, clientId);
-        return AccountDTO.toDtos(accounts);
+        return AccountDTO.toDtos(accountService.getAllAccounts(godmanId, clientId));
+    }
+
+    @GetMapping("/{accountId}")
+    public AccountDTO getAccountById(
+            @PathVariable Long clientId,
+            @PathVariable Long accountId,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        Long godmanId = Long.parseLong(userDetails.getUsername());
+        return AccountDTO.toDto(accountService.getAccountById(godmanId, clientId, accountId));
     }
 }
