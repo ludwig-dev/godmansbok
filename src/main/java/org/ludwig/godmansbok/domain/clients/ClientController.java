@@ -30,4 +30,11 @@ public class ClientController {
         Long godmanId = Long.parseLong(userDetails.getUsername());
         return ClientDTO.toDtos(clientService.getAllClientsByGodman(godmanId));
     }
+
+    @GetMapping("/{clientId}")
+    public ClientDTO getClientById(@PathVariable Long clientId,
+                                   @AuthenticationPrincipal UserDetails userDetails) {
+        Long godmanId = Long.parseLong(userDetails.getUsername());
+        return ClientDTO.toDto(clientService.getClientById(godmanId, clientId));
+    }
 }
