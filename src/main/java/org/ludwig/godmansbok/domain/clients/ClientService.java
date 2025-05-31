@@ -3,6 +3,7 @@ package org.ludwig.godmansbok.domain.clients;
 import org.ludwig.godmansbok.domain.clients.dto.ClientDTO;
 import org.ludwig.godmansbok.domain.godman.Godman;
 import org.ludwig.godmansbok.domain.godman.GodmanRepository;
+import org.ludwig.godmansbok.exceptions.NotAuthorizedException;
 import org.ludwig.godmansbok.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,6 @@ public class ClientService {
         Godman godman = godmanRepository.findById(godmanId)
                 .orElseThrow(() -> new ResourceNotFoundException("Godman not found"));
 
-        // Bygg Domain‐objekt från DTO
         Client c = new Client();
         c.setName(dto.name());
         c.setPersonalNumber(dto.personalNumber());
@@ -33,5 +33,16 @@ public class ClientService {
 
     public List<Client> getAllClientsByGodman(Long godmanId) {
         return clientRepository.findAllByGodmanId(godmanId);
+    }
+
+    public Client getClientById(Long godmanId, Long clientId) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+
+        // Kontrollera att klienten faktiskt tillhör godmanId
+        if (!client.getGodman().getId().equals(godmanId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+        return client;
     }
 }
