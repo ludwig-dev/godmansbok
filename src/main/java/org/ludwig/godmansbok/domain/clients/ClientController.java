@@ -1,6 +1,7 @@
 package org.ludwig.godmansbok.domain.clients;
 
 import org.ludwig.godmansbok.domain.clients.dto.ClientDTO;
+import org.ludwig.godmansbok.domain.clients.dto.ClientUpdateDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,5 +45,12 @@ public class ClientController {
                                  @AuthenticationPrincipal UserDetails userDetails) {
         Long godmanId = Long.parseLong(userDetails.getUsername());
         clientService.deleteClientById(godmanId, clientId);
+    }
+
+    @PatchMapping("/{clientId}")
+    public ClientDTO updateClientById(@PathVariable Long clientId, @RequestBody ClientUpdateDTO upd,
+                                      @AuthenticationPrincipal UserDetails userDetails) {
+        Long godmanId = Long.parseLong(userDetails.getUsername());
+        return ClientDTO.toDto(clientService.updateClientById(godmanId, clientId, upd));
     }
 }
