@@ -58,4 +58,16 @@ public class AccountController {
         Long godmanId = Long.parseLong(userDetails.getUsername());
         return AccountDTO.toDto(accountService.updateAccount(godmanId, clientId, accountId, dto));
     }
+
+    @DeleteMapping("/{accountId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAccountById(
+            @PathVariable Long clientId,
+            @PathVariable Long accountId,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        Long godmanId = Long.parseLong(userDetails.getUsername());
+        accountService.deleteAccount(godmanId, clientId, accountId);
+    }
+
 }
