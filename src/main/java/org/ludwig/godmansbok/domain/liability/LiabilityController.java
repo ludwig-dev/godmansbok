@@ -37,4 +37,14 @@ public class LiabilityController {
         Long godmanId = Long.parseLong(userDetails.getUsername());
         return LiabilityDTO.toDtos(liabilityService.getAllLiabilities(godmanId, clientId));
     }
+
+    @GetMapping("/{liabilityId}")
+    public LiabilityDTO getLiabilityById(
+            @PathVariable Long clientId,
+            @PathVariable Long liabilityId,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        Long godmanId = Long.parseLong(userDetails.getUsername());
+        return LiabilityDTO.toDto(liabilityService.getLiabilityById(godmanId, clientId, liabilityId));
+    }
 }
