@@ -101,4 +101,22 @@ public class LiabilityService {
 
         return liabilityRepository.save(liability);
     }
+
+    public void deleteLiability(Long godmanId,
+                                Long clientId,
+                                Long liabilityId) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+        if (!client.getGodman().getId().equals(godmanId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        Liability liability = liabilityRepository.findById(liabilityId)
+                .orElseThrow(() -> new ResourceNotFoundException("Liability not found"));
+        if (!liability.getClient().getId().equals(clientId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        liabilityRepository.delete(liability);
+    }
 }
