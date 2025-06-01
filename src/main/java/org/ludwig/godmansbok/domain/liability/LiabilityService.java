@@ -7,6 +7,8 @@ import org.ludwig.godmansbok.exceptions.NotAuthorizedException;
 import org.ludwig.godmansbok.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LiabilityService {
     private final LiabilityRepository liabilityRepository;
@@ -35,5 +37,14 @@ public class LiabilityService {
         liability.setAttachmentNumber(dto.attachmentNumber());
         liability.setClient(client);
         return liabilityRepository.save(liability);
+    }
+
+    public List<Liability> getAllLiabilities(Long godmanId, Long clientId) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+        if (!client.getGodman().getId().equals(godmanId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+        return liabilityRepository.findAllByClientId(clientId);
     }
 }
