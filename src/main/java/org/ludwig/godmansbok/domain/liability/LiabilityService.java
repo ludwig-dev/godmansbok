@@ -3,6 +3,7 @@ package org.ludwig.godmansbok.domain.liability;
 import org.ludwig.godmansbok.domain.clients.Client;
 import org.ludwig.godmansbok.domain.clients.ClientRepository;
 import org.ludwig.godmansbok.domain.liability.dto.LiabilityDTO;
+import org.ludwig.godmansbok.domain.liability.dto.LiabilityUpdateDTO;
 import org.ludwig.godmansbok.exceptions.NotAuthorizedException;
 import org.ludwig.godmansbok.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -64,5 +65,40 @@ public class LiabilityService {
             throw new NotAuthorizedException("Access denied");
         }
         return liability;
+    }
+
+    public Liability updateLiability(Long godmanId,
+                                     Long clientId,
+                                     Long liabilityId,
+                                     LiabilityUpdateDTO dto) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+        if (!client.getGodman().getId().equals(godmanId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        Liability liability = liabilityRepository.findById(liabilityId)
+                .orElseThrow(() -> new ResourceNotFoundException("Liability not found"));
+        if (!liability.getClient().getId().equals(clientId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        if (dto.getCreditor() != null) {
+            liability.setCreditor(dto.getCreditor());
+        }
+        if (dto.getDebtStartOfYear() != null) {
+            liability.setDebtStartOfYear(dto.getDebtStartOfYear());
+        }
+        if (dto.getDebtEndOfYear() != null) {
+            liability.setDebtEndOfYear(dto.getDebtEndOfYear());
+        }
+        if (dto.getChangeAmount() != null) {
+            liability.setChangeAmount(dto.getChangeAmount());
+        }
+        if (dto.getAttachmentNumber() != null) {
+            liability.setAttachmentNumber(dto.getAttachmentNumber());
+        }
+
+        return liabilityRepository.save(liability);
     }
 }
