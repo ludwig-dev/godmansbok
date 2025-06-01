@@ -2,6 +2,7 @@ package org.ludwig.godmansbok.domain.liability;
 
 import jakarta.validation.Valid;
 import org.ludwig.godmansbok.domain.liability.dto.LiabilityDTO;
+import org.ludwig.godmansbok.domain.liability.dto.LiabilityUpdateDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -46,5 +47,16 @@ public class LiabilityController {
 
         Long godmanId = Long.parseLong(userDetails.getUsername());
         return LiabilityDTO.toDto(liabilityService.getLiabilityById(godmanId, clientId, liabilityId));
+    }
+
+    @PatchMapping("/{liabilityId}")
+    public LiabilityDTO updateLiability(
+            @PathVariable Long clientId,
+            @PathVariable Long liabilityId,
+            @Valid @RequestBody LiabilityUpdateDTO dto,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        Long godmanId = Long.parseLong(userDetails.getUsername());
+        return LiabilityDTO.toDto(liabilityService.updateLiability(godmanId, clientId, liabilityId, dto));
     }
 }
