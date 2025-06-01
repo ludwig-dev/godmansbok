@@ -59,4 +59,15 @@ public class LiabilityController {
         Long godmanId = Long.parseLong(userDetails.getUsername());
         return LiabilityDTO.toDto(liabilityService.updateLiability(godmanId, clientId, liabilityId, dto));
     }
+
+    @DeleteMapping("/{liabilityId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteLiability(
+            @PathVariable Long clientId,
+            @PathVariable Long liabilityId,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        Long godmanId = Long.parseLong(userDetails.getUsername());
+        liabilityService.deleteLiability(godmanId, clientId, liabilityId);
+    }
 }
