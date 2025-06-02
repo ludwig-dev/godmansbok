@@ -1,5 +1,7 @@
 package org.ludwig.godmansbok.domain.clients;
 
+import org.ludwig.godmansbok.domain.account.Account;
+import org.ludwig.godmansbok.domain.account.AccountRepository;
 import org.ludwig.godmansbok.domain.clients.dto.ClientDTO;
 import org.ludwig.godmansbok.domain.clients.dto.ClientUpdateDTO;
 import org.ludwig.godmansbok.domain.godman.Godman;
@@ -14,10 +16,12 @@ import java.util.List;
 public class ClientService {
     private final ClientRepository clientRepository;
     private final GodmanRepository godmanRepository;
+    private final AccountRepository accountRepository;
 
-    public ClientService(ClientRepository clientRepository, GodmanRepository godmanRepository) {
+    public ClientService(ClientRepository clientRepository, GodmanRepository godmanRepository, AccountRepository accountRepository) {
         this.clientRepository = clientRepository;
         this.godmanRepository = godmanRepository;
+        this.accountRepository = accountRepository;
     }
 
     public Client createClient(Long godmanId, ClientDTO dto) {
@@ -28,8 +32,13 @@ public class ClientService {
         c.setName(dto.name());
         c.setPersonalNumber(dto.personalNumber());
         c.setGodman(godman);
-
-        return clientRepository.save(c);
+        Client savedClient = clientRepository.save(c);
+        Account defaultAccount = new Account();
+        defaultAccount.setAccountName("Transaktionskonto");
+        defaultAccount.setAccountNumber("");
+        defaultAccount.setClient(savedClient);
+        accountRepository.save(defaultAccount);
+        return savedClient;
     }
 
     public List<Client> getAllClientsByGodman(Long godmanId) {
