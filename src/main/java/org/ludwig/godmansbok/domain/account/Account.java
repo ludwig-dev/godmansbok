@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.ludwig.godmansbok.domain.transactions.Transaction;
 import org.ludwig.godmansbok.domain.clients.Client;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -28,6 +29,12 @@ public class Account {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
+
+    @Column(name = "start_balance", precision = 14, scale = 2, nullable = true)
+    private BigDecimal startBalance;
+
+    @Column(name = "end_balance", precision = 14, scale = 2, nullable = true)
+    private BigDecimal endBalance;
 
     // Relation: Transaktioner (inkomst/utgift) på detta konto
     @OneToMany(
