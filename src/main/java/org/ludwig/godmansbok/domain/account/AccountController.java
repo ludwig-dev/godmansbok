@@ -2,6 +2,7 @@ package org.ludwig.godmansbok.domain.account;
 
 import org.ludwig.godmansbok.domain.account.dto.AccountDTO;
 import org.ludwig.godmansbok.domain.account.dto.AccountUpdateDTO;
+import org.ludwig.godmansbok.domain.account.dto.BalanceUpdateDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -57,6 +58,17 @@ public class AccountController {
 
         Long godmanId = Long.parseLong(userDetails.getUsername());
         return AccountDTO.toDto(accountService.updateAccount(godmanId, clientId, accountId, dto));
+    }
+
+    @PatchMapping("/{accountId}/balance")
+    public AccountDTO updateAccountBalanceById(
+            @PathVariable Long clientId,
+            @PathVariable Long accountId,
+            @RequestBody BalanceUpdateDTO dto,
+            @AuthenticationPrincipal UserDetails userDetails) {
+
+        Long godmanId = Long.parseLong(userDetails.getUsername());
+        return AccountDTO.toDto(accountService.updateAccountBalance(godmanId, clientId, accountId, dto));
     }
 
     @DeleteMapping("/{accountId}")
