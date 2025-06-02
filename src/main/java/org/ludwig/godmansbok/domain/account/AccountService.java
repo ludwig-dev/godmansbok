@@ -2,6 +2,7 @@ package org.ludwig.godmansbok.domain.account;
 
 import org.ludwig.godmansbok.domain.account.dto.AccountDTO;
 import org.ludwig.godmansbok.domain.account.dto.AccountUpdateDTO;
+import org.ludwig.godmansbok.domain.account.dto.BalanceUpdateDTO;
 import org.ludwig.godmansbok.domain.clients.Client;
 import org.ludwig.godmansbok.domain.clients.ClientRepository;
 import org.ludwig.godmansbok.exceptions.NotAuthorizedException;
@@ -89,6 +90,32 @@ public class AccountService {
         }
         if (dto.getAccountNumber() != null) {
             account.setAccountNumber(dto.getAccountNumber());
+        }
+
+        return accountRepository.save(account);
+    }
+
+    public Account updateAccountBalance(Long godmanId, Long clientId, Long accountId, BalanceUpdateDTO dto) {
+        Client client = clientRepository.findById(clientId)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found"));
+
+        if (!client.getGodman().getId().equals(godmanId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
+
+        if (!account.getClient().getId().equals(clientId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
+
+        if (dto.startBalance() != null) {
+            account.setStartBalance(dto.startBalance());
+        }
+
+        if (dto.endBalance() != null) {
+            account.setEndBalance(dto.endBalance());
         }
 
         return accountRepository.save(account);
