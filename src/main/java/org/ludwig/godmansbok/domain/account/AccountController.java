@@ -17,17 +17,17 @@ public class AccountController {
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public AccountDTO createAccount(
-            @PathVariable Long clientId,
-            @RequestBody AccountDTO dto,
-            @AuthenticationPrincipal UserDetails userDetails) {
-
-        Long godmanId = Long.parseLong(userDetails.getUsername());
-        return AccountDTO.toDto(accountService.createAccount(godmanId, clientId, dto));
-    }
+// SHOULD ONLY BE ONE ACCOUNT PER CLIENT
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public AccountDTO createAccount(
+//            @PathVariable Long clientId,
+//            @RequestBody AccountDTO dto,
+//            @AuthenticationPrincipal UserDetails userDetails) {
+//
+//        Long godmanId = Long.parseLong(userDetails.getUsername());
+//        return AccountDTO.toDto(accountService.createAccount(godmanId, clientId, dto));
+//    }
 
     @GetMapping
     public List<AccountDTO> getAllAccounts(
@@ -59,15 +59,15 @@ public class AccountController {
         return AccountDTO.toDto(accountService.updateAccount(godmanId, clientId, accountId, dto));
     }
 
-    @DeleteMapping("/{accountId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAccountById(
-            @PathVariable Long clientId,
-            @PathVariable Long accountId,
-            @AuthenticationPrincipal UserDetails userDetails) {
-
-        Long godmanId = Long.parseLong(userDetails.getUsername());
-        accountService.deleteAccount(godmanId, clientId, accountId);
-    }
+//    @DeleteMapping("/{accountId}")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public void deleteAccountById(
+//            @PathVariable Long clientId,
+//            @PathVariable Long accountId,
+//            @AuthenticationPrincipal UserDetails userDetails) {
+//
+//        Long godmanId = Long.parseLong(userDetails.getUsername());
+//        accountService.deleteAccount(godmanId, clientId, accountId);
+//    }
 
 }
