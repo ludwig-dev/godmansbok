@@ -27,13 +27,17 @@ public class SummaryService {
         this.transactionRepository = transactionRepository;
     }
 
-    public SummaryDTO getFullSummaryForYear(Long clientId, Integer year) {
+    public SummaryDTO getFullSummaryForYear(Long godmanId, Long clientId, Integer year) {
         Client client = clientRepository.findById(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found"));
-
+        if (!client.getGodman().getId().equals(godmanId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
         Account account = accountRepository.findFirstByClientId(clientId)
                 .orElseThrow(() -> new ResourceNotFoundException("Account not found"));
-
+        if (!account.getClient().getId().equals(clientId)) {
+            throw new NotAuthorizedException("Access denied");
+        }
         BigDecimal startBalance = account.getStartBalance() != null
                 ? account.getStartBalance()
                 : BigDecimal.ZERO;
