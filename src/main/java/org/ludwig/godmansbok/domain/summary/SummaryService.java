@@ -59,7 +59,7 @@ public class SummaryService {
         BigDecimal totalAB = startBalance.add(sumIncome);
         BigDecimal totalCD = sumExpense.add(endBalance);
         boolean isMatch = totalAB.compareTo(totalCD) == 0;
-        return new SummaryDTO(startBalance, sumIncome, totalAB, sumExpense, endBalance, totalCD, isMatch);
+        return new SummaryDTO(startBalance, sumIncome, totalAB, sumExpense, endBalance, totalCD, isMatch, account.getAccountName(), account.getAccountNumber(), account.getId());
     }
 
 }
