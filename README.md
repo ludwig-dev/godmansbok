@@ -1,6 +1,6 @@
 # Godmansbok
 
-A backend system for **godman** (legal guardianship in Sweden).  
+A system for **godman** (legal guardianship in Sweden).  
 It helps manage clients, their finances, and assets with authentication and reporting features.  
 
 ## Features  
