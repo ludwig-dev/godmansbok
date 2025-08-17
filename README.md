@@ -44,7 +44,7 @@ cd godmansbok
 ### Environment Variables
 Create a `.env` file in the project root:
 ```env
-DB_URL=jdbc:postgresql://localhost:5432/yourdbname
+DB_URL2=jdbc:postgresql://localhost:5432/yourdbname
 DB_USER=yourdbuser
 DB_PASSWORD=yourdbpassword
 JWT_SECRET=yourjwtsecret
