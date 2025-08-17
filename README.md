@@ -1,7 +1,7 @@
 # Godmansbok
 
 A system for **godman** (legal guardianship in Sweden).  
-It helps manage clients, their finances, and assets with authentication and reporting features.  
+It helps manage clients, their finances, and assets with generating and exporting yearly summaries in PDF format
 
 ## Features  
 - 🔑 User registration, login & logout (JWT auth)  
